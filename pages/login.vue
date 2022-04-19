@@ -9,6 +9,8 @@
       type="error"
     >
       {{ frmMeta.error }}
+      <br />
+      {{ frmMeta.errorMessage }}
     </v-alert>
 
     <v-alert v-if="frmMeta.status === 'submitted'" border="left" type="info">
@@ -85,6 +87,7 @@ const data = () => ({
 const frmMetaDefaults = () => ({
   error: null,
   status: null,
+  errorMessage: null,
 })
 
 const methods = {
@@ -107,10 +110,8 @@ const methods = {
       this.frmMeta.error = err
       this.frmMeta.status = 'error'
       this.buttonLoading = false
-      try {
-        this.frmMeta.error += ' - ' + err.response.data.message
-      } catch (e) {
-        this.frmMeta.error += ' - Unknown error'
+      if (err.response && err.response.data) {
+        this.frmMeta.errorMessage = JSON.stringify(err.response.data)
       }
       this.frm.password = ''
       this.buttonLoading = false
