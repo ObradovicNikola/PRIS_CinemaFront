@@ -118,13 +118,6 @@ const data = () => ({
     },
     {
       auth: true,
-      role: 'ADMIN',
-      title: 'Courses',
-      icon: 'school',
-      link: '/courses',
-    },
-    {
-      auth: true,
       role: 'STUDENT',
       title: 'My Courses',
       icon: 'school',
