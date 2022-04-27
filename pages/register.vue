@@ -163,7 +163,7 @@ const methods = {
     this.buttonLoading = true
 
     try {
-      await this.$axios.$post(`api/users/register/2`, this.frm, config)
+      await this.$axios.$post(`api/users/register/3`, this.frm, config)
     } catch (err) {
       this.frmMeta.error = err
       this.frmMeta.status = 'error'
