@@ -9,10 +9,12 @@
 
 <script>
 const name = 'AdminDashboard'
+const layout = "admin"
 
 const middleware = ['auth-and-admin']
 export default {
   name,
+  layout,
   middleware,
 }
 </script>

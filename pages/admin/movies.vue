@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1>Projections</h1>
+    <h1>Movies</h1>
   </div>
 </template>
 
 <script>
-const name = 'AllProjections'
+const name = 'Movies'
 const layout = 'admin'
 
 const middleware = ['auth-and-admin']

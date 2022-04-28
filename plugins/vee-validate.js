@@ -32,13 +32,13 @@ extend('alpha_num', {
 
 extend('confirmed', confirmed)
 
-extend("confirmedCustom",{
+extend('confirmedCustom', {
   validate(value, args) {
-    return args.val === value;
+    return args.val === value
   },
   params: ['val'],
-  message: '{_field_} is not valid'
-});
+  message: '{_field_} is not valid',
+})
 
 extend('email', {
   ...email,
@@ -68,6 +68,11 @@ extend('min_value', {
 })
 
 extend('numeric', numeric)
+
+extend('numeric_message', {
+  ...numeric,
+  message: 'Only numeric characters',
+})
 
 extend('required', {
   ...required,
