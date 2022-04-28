@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="enabled" max-width="500">
+    <v-dialog v-model="enabled">
       <template #activator="{ on, attrs }">
         <v-btn
           color="orange"
@@ -12,7 +12,7 @@
           >New Movie</v-btn
         >
       </template>
-      <v-card style="min-width: 350px">
+      <v-card style="width: 550px">
         <v-card-title>
           <span class="text-h5">New Movie</span>
         </v-card-title>
@@ -59,48 +59,60 @@
 
               <ValidationProvider
                 v-slot="{ errors }"
-                name="seatsGroundFloor"
-                rules="required|numeric_message"
+                name="Cover Image"
+                :rules="{
+                  required: true,
+                  regex: validImageUrlRegex,
+                }"
               >
                 <v-text-field
-                  v-model="frm.seatsGroundFloor"
-                  type="text"
-                  :counter="20"
+                  v-model="frm.image"
                   :error-messages="errors"
-                  label="Seats Ground Floor"
+                  label="Cover Image"
                   required
                 ></v-text-field>
               </ValidationProvider>
 
               <ValidationProvider
                 v-slot="{ errors }"
-                name="seatsGalleryLeft"
-                rules="required|numeric_message"
+                name="Description"
+                rules="required|max:1000"
               >
-                <v-text-field
-                  v-model="frm.seatsGalleryLeft"
-                  type="text"
-                  :counter="20"
+                <v-textarea
+                  v-model="frm.description"
                   :error-messages="errors"
-                  label="Seats Gallery Left"
-                  required
-                ></v-text-field>
+                  outlined
+                  :counter="1000"
+                  label="Description"
+                ></v-textarea>
               </ValidationProvider>
 
               <ValidationProvider
                 v-slot="{ errors }"
-                name="seatsGalleryRight"
+                name="Runtime"
                 rules="required|numeric_message"
               >
                 <v-text-field
-                  v-model="frm.seatsGalleryRight"
+                  v-model="frm.runtime"
                   type="text"
-                  :counter="20"
                   :error-messages="errors"
-                  label="Seats Gallery Right"
+                  label="Runtime (minutes)"
                   required
                 ></v-text-field>
               </ValidationProvider>
+
+              <div class="genres">
+                <label for="genres" class="v-label v-label--active theme--dark">Genres</label>
+                <p>{{ frm.genres }}</p>
+                <v-switch
+                  v-for="genre in genres"
+                  :key="`genre-${genre.id}`"
+                  v-model="frm.genres"
+                  color="primary"
+                  :label="genre.name"
+                  :value="genre.name"
+                ></v-switch>
+              </div>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -146,7 +158,7 @@ const frmDefaults = () => {
     description:
       'Dutch and his team are out on a mission to rescue a group of hostages in Central America. There, they discover that they are being targeted by an extraterrestrial warrior.',
     runtime: 107,
-    genres: 'ACTION, THRILLER',
+    genres: [],
   }
 }
 
@@ -161,16 +173,32 @@ const data = () => ({
   frm: frmDefaults(),
   frmMeta: frmMetaDefaults(),
   buttonLoading: false,
+  validImageUrlRegex: /^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)$/,
+  // genres: ['ACTION', 'THRILLER', 'DRAMA', 'COMEDY', 'HORROR'],
+  genres: [
+    { id: 1, name: 'ACTION' },
+    { id: 2, name: 'THRILLER' },
+    { id: 3, name: 'DRAMA' },
+    { id: 4, name: 'COMEDY' },
+    { id: 5, name: 'HORROR' },
+  ],
 })
 
 const methods = {
   async submit() {
-    // await console.log(this.frm.datumAktivnostiunixTimestamp)
     this.buttonLoading = true
+    let genresString = ''
+    this.frm.genres.forEach((genre) => {
+      genresString += genre
+      if (genre !== this.frm.genres[this.frm.genres.length - 1]) {
+        genresString += ', '
+      }
+    })
+    this.frm.genres = genresString
 
     let res
     try {
-      res = await this.$axios.$post(`api/halls`, this.frm)
+      res = await this.$axios.$post(`api/movies`, this.frm)
       await this.$nuxt.refresh()
     } catch (err) {
       this.frmMeta.error = err
