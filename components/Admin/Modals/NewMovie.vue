@@ -173,7 +173,7 @@ const data = () => ({
   frm: frmDefaults(),
   frmMeta: frmMetaDefaults(),
   buttonLoading: false,
-  validImageUrlRegex: /^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)$/,
+  validImageUrlRegex: /^(http(s?):)([/|.|\w|\s|-])*.*\.(?:jpg|jpeg|gif|png)$/,
   // genres: ['ACTION', 'THRILLER', 'DRAMA', 'COMEDY', 'HORROR'],
   genres: [
     { id: 1, name: 'ACTION' },
