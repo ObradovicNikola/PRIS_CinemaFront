@@ -9,11 +9,11 @@
         :headers="[
           { text: 'id', value: 'id' },
           { text: 'Naziv', value: 'name' },
-          { text: 'Seats Ground Floor', value: 'displayDto.seatsGroundFloor' },
-          { text: 'Seats Gallery Left', value: 'displayDto.seatsGalleryLeft' },
+          { text: 'Seats Ground Floor', value: 'seatsGroundFloor' },
+          { text: 'Seats Gallery Left', value: 'seatsGalleryLeft' },
           {
             text: 'Seats Gallery Right',
-            value: 'displayDto.seatsGalleryRight',
+            value: 'seatsGalleryRight',
           },
           { text: 'control', value: 'control' },
         ]"
@@ -34,14 +34,11 @@
             color="error"
             style="width: 100px"
             :loading="item.buttonLoading"
-            @click="enableDisableHall(item.id, true)"
+            @click="deleteHall(item.id)"
           >
             <v-icon small class="mr-2"> mdi-delete </v-icon>
             Delete
           </v-btn>
-          <!-- <nuxt-link :to="`/profile/${item.id}`">
-            <v-icon small class="mr-2"> mdi-account-arrow-right </v-icon>
-          </nuxt-link> -->
         </template>
       </v-data-table>
     </div>
@@ -66,7 +63,7 @@ export default {
   middleware,
   data,
   async fetch() {
-    this.halls = await this.$axios.$get('api/halls')
+    this.halls = await this.$axios.$get('api/halls/display')
   },
 }
 </script>
