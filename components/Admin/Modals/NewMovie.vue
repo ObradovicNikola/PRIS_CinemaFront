@@ -102,7 +102,9 @@
               </ValidationProvider>
 
               <div class="genres">
-                <label for="genres" class="v-label v-label--active theme--dark">Genres</label>
+                <label for="genres" class="v-label v-label--active theme--dark"
+                  >Genres</label
+                >
                 <p>{{ frm.genres }}</p>
                 <v-switch
                   v-for="genre in genres"
