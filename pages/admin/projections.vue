@@ -2,7 +2,42 @@
   <div class="admin-projections">
     <h1>Projections</h1>
     <new-projection :halls="halls" :movies="movies"></new-projection>
-    <v-container>
+
+    <v-data-table
+      :headers="[
+        { text: 'id', value: 'id' },
+        { text: 'Naziv', value: 'displayDto.movie.title' },
+        { text: 'Hall', value: 'displayDto.hall.name' },
+        { text: 'Date', value: 'date' },
+        { text: 'Time', value: 'time' },
+        { text: 'Fee', value: 'fee' },
+        { text: 'control', value: 'control' },
+      ]"
+      :items="projections"
+      :items-per-page="5"
+      class="elevation-1"
+      :search="tableSearch"
+    >
+      <template #top>
+        <v-text-field
+          v-model="tableSearch"
+          label="Search"
+          class="mx-4"
+        ></v-text-field>
+      </template>
+      <template #[`item.control`]="{ item }">
+        <v-btn
+          color="error"
+          style="width: 100px"
+          :loading="item.buttonLoading"
+          @click="deleteProjections(item.id)"
+        >
+          <v-icon small class="mr-2"> mdi-delete </v-icon>
+        </v-btn>
+      </template>
+    </v-data-table>
+
+    <v-container class="mt-6">
       <v-row>
         <v-col
           v-for="projection in projections"
@@ -44,14 +79,14 @@
                     text-color="black"
                     class="mb-2 font-weight-bold"
                   >
-                    {{ projection.dateTime.split('T')[0] }}
+                    {{ projection.date }}
                   </v-chip>
                   <v-chip
                     color="grey"
                     text-color="black"
                     class="mb-2 font-weight-bold"
                   >
-                    {{ projection.dateTime.split('T')[1] }}
+                    {{ projection.time }}
                   </v-chip>
                   <v-chip
                     color="info"
@@ -63,7 +98,11 @@
                 </div>
               </v-card-text>
               <v-card-actions class="justify-end">
-                <v-btn color="error" dark @click="deleteMovie(projection.id)">
+                <v-btn
+                  color="error"
+                  dark
+                  @click="deleteProjections(projection.id)"
+                >
                   <v-icon small class="mr-2"> mdi-delete </v-icon>
                   Delete
                 </v-btn>
@@ -86,10 +125,11 @@ const data = () => ({
   halls: [],
   movies: [],
   projections: [],
+  tableSearch: '',
 })
 
 const methods = {
-  async deleteMovie(id) {
+  async deleteProjections(id) {
     // this.buttonLoading = true
 
     try {
@@ -111,6 +151,10 @@ export default {
     this.halls = await this.$axios.$get('api/halls/display')
     this.movies = await this.$axios.$get('api/movies')
     this.projections = await this.$axios.$get('api/movies/projections/all')
+    this.projections.forEach((element) => {
+      element.date = element.dateTime.split('T')[0]
+      element.time = element.dateTime.split('T')[1]
+    })
   },
   methods,
 }
