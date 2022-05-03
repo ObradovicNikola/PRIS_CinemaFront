@@ -75,7 +75,11 @@
                       </div>
                     </v-col>
                   </v-row>
-                  <v-divider :inset="false" class="mb-8"></v-divider>
+                  <v-divider
+                    :inset="false"
+                    class="mb-8"
+                    style="border-color: #ffa21a"
+                  ></v-divider>
                 </div>
               </div>
               <div v-else>

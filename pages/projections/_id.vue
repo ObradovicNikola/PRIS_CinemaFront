@@ -33,8 +33,8 @@
                 </v-chip-group>
               </div>
             </v-col>
-            <v-col cols="2">
-              <div class="d-flex flex-column justify-end align-start">
+            <v-col cols="2" class="d-flex flex-column justify-end align-start">
+              <div class="">
                 <p>
                   <span class="mr-2">
                     <v-icon> mdi-calendar </v-icon>
@@ -58,7 +58,11 @@
               </div>
             </v-col>
           </v-row>
-          <v-divider :inset="false" class="mb-8"></v-divider>
+          <v-divider
+            :inset="false"
+            class="mb-8"
+            style="border-color: #ffa21a"
+          ></v-divider>
           <div>
             <p>TODO: rezervacija...</p>
           </div>
