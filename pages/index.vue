@@ -1,63 +1,118 @@
 <template>
   <div class="home">
-    <h1>Home page</h1>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod
-      bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra
-      justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus
-      et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum,
-      nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus
-      sapien nunc eget.
-    </p>
-    <h1 class="mb-3">Users:</h1>
-    <div v-for="user in users" :key="`user-${user.id}`">
-      <div class="d-flex">
-        <p class="mr-4" style="min-width: 150px">
-          <strong>Name:</strong> {{ user.first_name }}
-        </p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-      </div>
-    </div>
-    <h1>Posts:</h1>
-    <div v-for="post in posts" :key="post.id">
-      <h1>{{ post.title }}</h1>
-      <p>{{ post.body }}</p>
-      <br />
-    </div>
+    <h1>Repertoire - this week</h1>
+
+    <v-card>
+      <v-tabs v-model="tab" background-color="primary" dark>
+        <v-tab v-for="entry in repertoire" :key="entry.date">
+          {{ entry.date }}
+        </v-tab>
+      </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item
+          v-for="entry in repertoire"
+          :key="`item=${entry.date}`"
+          class="pa-4"
+        >
+          <v-card flat>
+            <v-card-text>
+              <div v-if="entry.movies.length > 0" three-line>
+                <div v-for="movie in entry.movies" :key="movie.id">
+                  <v-row class="mb-6">
+                    <v-col cols="3">
+                      <v-img
+                        :src="movie.imgUrl"
+                        :alt="`${movie.title} poster`"
+                        height="400px"
+                        width="300px"
+                      />
+                    </v-col>
+                    <v-col cols="7">
+                      <div class="d-flex flex-column" style="height: 100%">
+                        <h3 class="text-h3 mb-8">{{ movie.title }}</h3>
+                        <p>runtime: {{ movie.runtime }}</p>
+                        <p>{{ movie.description }}</p>
+                        <v-spacer></v-spacer>
+                        <v-chip-group class="mb-4">
+                          <v-chip
+                            v-for="genre in movie.genres"
+                            :key="`${movie.title}-genre${genre.id}`"
+                            style="background-color: #ffa21a"
+                          >
+                            {{ genre.genre }}
+                          </v-chip>
+                        </v-chip-group>
+                      </div>
+                    </v-col>
+                    <v-col cols="2">
+                      <p>Projections:</p>
+                      <div
+                        v-for="projection in movie.projections"
+                        :key="`projection-${movie.id}-${projection.id}`"
+                        class="mb-2"
+                      >
+                        <NuxtLink
+                          :to="`/projections/${projection.id}`"
+                          class="
+                            projection-entry
+                            d-flex
+                            flex-column
+                            justify-space-between
+                            align-center
+                          "
+                          style="cursor: pointer"
+                        >
+                          <p class="text-h5" style="color: #ffa21a">
+                            {{
+                              projection.dateTime.split('T')[1].substring(0, 5)
+                            }}
+                          </p>
+                          <p>{{ projection.fee }} RSD</p>
+                          <p>{{ projection.hallName }}</p>
+                        </NuxtLink>
+                        <v-divider :inset="false"></v-divider>
+                      </div>
+                    </v-col>
+                  </v-row>
+                  <v-divider :inset="false" class="mb-8"></v-divider>
+                </div>
+              </div>
+              <div v-else>
+                <p>No projections here...</p>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
+    </v-card>
   </div>
 </template>
 
 <script>
 const name = 'HomePage'
 
-const asyncData = async function ({ $axios }) {
-  const dataJSON = await $axios.$get('https://reqres.in/api/users?page=2')
-  // const res = await $axios.get('https://jsonplaceholder.typicode.com/posts')
-  // console.log(res.data)
-  const users = dataJSON.data
-  return { users }
-}
-// const methods = {
-//   async fetchSomething() {
-//     const ip = await this.$axios.$get('http://icanhazip.com')
-//     this.ip = ip
-//   },
-// }
+const data = () => ({
+  repertoire: [],
+  tab: null,
+})
 
-const created = function () {
-  // console.log('created')
-  this.$store.dispatch('posts/getPosts')
-}
-
-// calls every time the route changes
-const mounted = function () {
-  // console.log('mounted')
-}
-
-const computed = {
-  posts() {
-    return this.$store.state.posts.all.slice(0, 5)
+export default {
+  name,
+  data,
+  async fetch() {
+    this.repertoire = await this.$axios.$get('api/movies/grouped/date')
   },
 }
-export default { name, asyncData, computed, created, mounted }
 </script>
+
+<style scoped>
+.projection-entry {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+
+.projection-entry:hover {
+  background: #252626;
+}
+</style>

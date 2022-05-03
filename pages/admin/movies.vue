@@ -16,8 +16,8 @@
             <v-img
               :src="movie.image"
               :alt="`${movie.title} poster`"
-              max-height="300px"
-              max-width="180px"
+              height="300px"
+              width="200px"
             />
           </div>
           <div class="col">
