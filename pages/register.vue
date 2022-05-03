@@ -138,6 +138,7 @@ const frmDefaults = () => {
     agree: false,
     firstName: 'John',
     lastName: 'Doe',
+    roleId: 3
   }
 }
 
@@ -163,7 +164,7 @@ const methods = {
     this.buttonLoading = true
 
     try {
-      await this.$axios.$post(`api/users/register/3`, this.frm, config)
+      await this.$axios.$post(`api/users/register`, this.frm, config)
     } catch (err) {
       this.frmMeta.error = err
       this.frmMeta.status = 'error'
