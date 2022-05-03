@@ -57,6 +57,20 @@ const data = () => ({
   buttonLoading: false,
 })
 
+const methods = {
+  async deleteHall(id) {
+    // this.buttonLoading = true
+
+    try {
+      await this.$axios.$post(`api/halls/delete/${id}`)
+      this.$nuxt.refresh()
+    } catch (err) {
+      // this.buttonLoading = false
+    }
+    // this.buttonLoading = false
+  },
+}
+
 export default {
   name,
   layout,
@@ -65,5 +79,6 @@ export default {
   async fetch() {
     this.halls = await this.$axios.$get('api/halls/display')
   },
+  methods,
 }
 </script>

@@ -29,15 +29,25 @@
               <p>{{ movie.description }}</p>
 
               <!-- genres -->
-              <v-chip-group class="">
-                <v-chip
-                  v-for="genre in movie.genres"
-                  :key="`${movie.title}-genre${genre.id}`"
-                  style="background-color: #ffa21a"
+              <div class="">
+                <v-chip-group class="">
+                  <v-chip
+                    v-for="genre in movie.genres"
+                    :key="`${movie.title}-genre${genre.id}`"
+                    style="background-color: #ffa21a"
+                  >
+                    {{ genre.genre }}
+                  </v-chip>
+                </v-chip-group>
+                <v-btn
+                  color="error"
+                  style="width: 100px"
+                  @click="deleteMovie(movie.id)"
                 >
-                  {{ genre.genre }}
-                </v-chip>
-              </v-chip-group>
+                  <v-icon small class="mr-2"> mdi-delete </v-icon>
+                  Delete
+                </v-btn>
+              </div>
             </div>
           </div>
         </div>
@@ -56,10 +66,19 @@ const data = () => ({
   movies: [],
 })
 
-// get data from server
-// const fetch = async () => {
-//   this.movies = await this.$axios.$get('api/movies')
-// }
+const methods = {
+  async deleteMovie(id) {
+    // this.buttonLoading = true
+
+    try {
+      await this.$axios.$post(`api/movies/delete/${id}`)
+      this.$nuxt.refresh()
+    } catch (err) {
+      // this.buttonLoading = false
+    }
+    // this.buttonLoading = false
+  },
+}
 
 export default {
   name,
@@ -69,5 +88,6 @@ export default {
   async fetch() {
     this.movies = await this.$axios.$get('api/movies')
   },
+  methods,
 }
 </script>
