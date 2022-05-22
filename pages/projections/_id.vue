@@ -38,6 +38,12 @@
               <div class="">
                 <p>
                   <span class="mr-2">
+                    <v-icon> mdi-star </v-icon>
+                  </span>
+                  {{ projection.displayDto.movie.avarageRating }}
+                </p>
+                <p>
+                  <span class="mr-2">
                     <v-icon> mdi-calendar </v-icon>
                   </span>
                   {{ projection.displayDto.dateTime.split('T')[0] }}
@@ -65,7 +71,27 @@
             style="border-color: #ffa21a"
           ></v-divider>
           <div>
+            <RateProjection :id-projection="projection.id" />
+
+            <NewCommentForm :id-movie="projection.displayDto.movie.id" />
             <p>TODO: rezervacija...</p>
+
+            <v-list two-line subheader>
+              <v-subheader class="text-h4">Comments</v-subheader>
+              <div
+                v-for="comment in projection.displayDto.movie.comments"
+                :key="`comment-${comment.id}`"
+              >
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>{{comment.userDisplayDto.firstName}} {{comment.userDisplayDto.lastName}}</v-list-item-title>
+                    <v-list-item-subtitle class="ml-3 mt-2"
+                      ><span>{{ comment.content }}</span></v-list-item-subtitle
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </div>
+            </v-list>
           </div>
         </div>
       </v-card-text>
