@@ -110,6 +110,12 @@ const data = () => ({
       link: '/',
     },
     {
+      auth: false,
+      title: 'Top Rated',
+      icon: 'filmstrip',
+      link: '/top-rated',
+    },
+    {
       auth: true,
       role: 'STUDENT',
       title: 'Courses',
