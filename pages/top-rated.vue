@@ -33,6 +33,13 @@
                 <v-card-text class="px-4">
                   <div class="d-flex flex-column align-start">
                     <v-chip
+                      color="info"
+                      text-color="black"
+                      class="mb-2 font-weight-bold"
+                    >
+                      Rating: {{ projection.displayDto.movie.avarageRating }}
+                    </v-chip>
+                    <v-chip
                       color="grey"
                       text-color="black"
                       class="mb-2 font-weight-bold"
