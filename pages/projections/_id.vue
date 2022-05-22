@@ -21,6 +21,7 @@
                 <p>runtime: {{ projection.displayDto.movie.runtime }}</p>
                 <p>{{ projection.displayDto.movie.description }}</p>
                 <v-spacer></v-spacer>
+                <!-- TODO: trailer -->
 
                 <v-chip-group class="mb-4">
                   <v-chip

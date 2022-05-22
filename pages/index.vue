@@ -4,25 +4,25 @@
 
     <v-card>
       <v-tabs v-model="tab" background-color="primary" dark>
-        <v-tab v-for="entry in repertoire" :key="entry.date">
+        <v-tab v-for="entry in repertoire.repertoireDays" :key="entry.date">
           {{ entry.date }}
         </v-tab>
       </v-tabs>
 
       <v-tabs-items v-model="tab">
         <v-tab-item
-          v-for="entry in repertoire"
+          v-for="entry in repertoire.repertoireDays"
           :key="`item=${entry.date}`"
           class="pa-4"
         >
           <v-card flat>
             <v-card-text>
-              <div v-if="entry.movies.length > 0" three-line>
+              <div v-if="entry && entry.movies && entry.movies.length > 0" three-line>
                 <div v-for="movie in entry.movies" :key="movie.id">
                   <v-row class="mb-6">
                     <v-col cols="3">
                       <v-img
-                        :src="movie.imgUrl"
+                        :src="movie.image"
                         :alt="`${movie.title} poster`"
                         height="400px"
                         width="300px"

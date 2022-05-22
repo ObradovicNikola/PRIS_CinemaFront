@@ -6,8 +6,8 @@
     <v-data-table
       :headers="[
         { text: 'id', value: 'id' },
-        { text: 'Naziv', value: 'displayDto.movie.title' },
-        { text: 'Hall', value: 'displayDto.hall.name' },
+        { text: 'Naziv', value: 'movie.title' },
+        { text: 'Hall', value: 'hallName' },
         { text: 'Date', value: 'date' },
         { text: 'Time', value: 'time' },
         { text: 'Fee', value: 'fee' },
@@ -48,7 +48,7 @@
             height="300"
             color="info"
             class="projection-background"
-            :style="`background-image: url(${projection.displayDto.movie.image});`"
+            :style="`background-image: url(${projection.movie.image});`"
           >
             <v-overlay
               :absolute="true"
@@ -62,7 +62,7 @@
             >
               <v-card-title>
                 <span class="headline">
-                  {{ projection.displayDto.movie.title }}
+                  {{ projection.movie.title }}
                 </span>
               </v-card-title>
               <v-card-text class="px-4">
@@ -72,7 +72,7 @@
                     text-color="black"
                     class="mb-2 font-weight-bold"
                   >
-                    {{ projection.displayDto.hall.name }}
+                    {{ projection.hallName }}
                   </v-chip>
                   <v-chip
                     color="grey"
