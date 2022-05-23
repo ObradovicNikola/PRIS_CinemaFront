@@ -71,12 +71,14 @@
             style="border-color: #ffa21a"
           ></v-divider>
           <div>
+            <ReserveTicketForProjection
+              :id-projection="projection.id"
+              :base-price="projection.displayDto.fee"
+            />
+
             <RateProjection :id-projection="projection.id" />
 
             <NewCommentForm :id-movie="projection.displayDto.movie.id" />
-            <p>TODO: rezervacija...</p>
-            <!-- reserve button -->
-            <ReserveTicketForProjection :id-projection="projection.id" />
 
             <v-list two-line subheader>
               <v-subheader class="text-h4">Comments</v-subheader>

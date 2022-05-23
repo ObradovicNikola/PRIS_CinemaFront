@@ -49,6 +49,11 @@
                 {{ data.item.name }}
               </template>
             </v-select>
+
+            <p v-if="frm.sectionId.modificator">
+              Price:
+              {{ parseFloat(basePrice * frm.sectionId.modificator).toFixed(2) }}
+            </p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -81,6 +86,10 @@ const props = {
     type: Number,
     required: true,
   },
+  basePrice: {
+    type: Number,
+    required: true,
+  },
 }
 
 const frmDefaults = () => {
@@ -105,14 +114,17 @@ const data = () => ({
     {
       id: 1,
       name: 'GROUND FLOOR',
+      modificator: 1,
     },
     {
       id: 2,
       name: 'GALLERY LEFT',
+      modificator: 1.25,
     },
     {
       id: 3,
       name: 'GALLERY RIGHT',
+      modificator: 1.35,
     },
   ],
 })
