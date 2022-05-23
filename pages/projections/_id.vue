@@ -75,6 +75,8 @@
 
             <NewCommentForm :id-movie="projection.displayDto.movie.id" />
             <p>TODO: rezervacija...</p>
+            <!-- reserve button -->
+            <ReserveTicketForProjection :id-projection="projection.id" />
 
             <v-list two-line subheader>
               <v-subheader class="text-h4">Comments</v-subheader>
@@ -84,7 +86,10 @@
               >
                 <v-list-item>
                   <v-list-item-content>
-                    <v-list-item-title>{{comment.userDisplayDto.firstName}} {{comment.userDisplayDto.lastName}}</v-list-item-title>
+                    <v-list-item-title
+                      >{{ comment.userDisplayDto.firstName }}
+                      {{ comment.userDisplayDto.lastName }}</v-list-item-title
+                    >
                     <v-list-item-subtitle class="ml-3 mt-2"
                       ><span>{{ comment.content }}</span></v-list-item-subtitle
                     >
