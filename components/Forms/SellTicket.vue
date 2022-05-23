@@ -2,7 +2,7 @@
   <div>
     <v-card style="min-width: 350px">
       <v-card-title class="pb-2">
-        <span class="text-h5">Reserve a ticket</span>
+        <span class="text-h5">Sell a ticket</span>
       </v-card-title>
       <ValidationObserver
         v-slot="{ invalid }"
@@ -66,7 +66,7 @@
               :disabled="invalid"
               :loading="buttonLoading"
             >
-              Reserve
+              Sell
             </v-btn>
           </v-card-actions>
         </form>
@@ -79,7 +79,7 @@
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 // const FormData = require('form-data')
 
-const name = 'ReserveTicketForProjection'
+const name = 'SellTicket'
 const components = { ValidationObserver, ValidationProvider }
 const props = {
   idProjection: {
@@ -144,6 +144,9 @@ const methods = {
       this.frmMeta.error = err
       this.frmMeta.status = 'error'
       this.buttonLoading = false
+      if (err.response && err.response.data) {
+        this.frmMeta.error = err.response.data
+      }
       return
     }
     this.response = res

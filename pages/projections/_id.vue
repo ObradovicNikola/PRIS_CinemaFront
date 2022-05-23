@@ -21,7 +21,15 @@
                 <p>runtime: {{ projection.displayDto.movie.runtime }}</p>
                 <p>{{ projection.displayDto.movie.description }}</p>
                 <v-spacer></v-spacer>
-                <!-- TODO: trailer -->
+                <p>
+                  <a
+                    :href="projection.displayDto.movie.trailer"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <v-chip style="cursor: pointer">trailer</v-chip>
+                  </a>
+                </p>
 
                 <v-chip-group class="mb-4">
                   <v-chip
@@ -58,6 +66,12 @@
                 </p>
                 <p>
                   <span class="mr-2">
+                    <v-icon> mdi-map-marker </v-icon>
+                  </span>
+                  {{ projection.displayDto.hallName }}
+                </p>
+                <p>
+                  <span class="mr-2">
                     <v-icon> mdi-currency-usd </v-icon>
                   </span>
                   {{ projection.displayDto.fee }} RSD
@@ -71,10 +85,21 @@
             style="border-color: #ffa21a"
           ></v-divider>
           <div>
-            <ReserveTicketForProjection
-              :id-projection="projection.id"
-              :base-price="projection.displayDto.fee"
-            />
+            <template v-if="$auth.loggedIn && $auth.user.role != 'EMPLOYEE'">
+              <ReserveTicketForProjection
+                :id-projection="projection.id"
+                :base-price="projection.displayDto.fee"
+              />
+            </template>
+
+            <template v-if="$auth.loggedIn && $auth.user.role == 'EMPLOYEE'">
+              <SellTicket
+                :id-projection="projection.id"
+                :base-price="projection.displayDto.fee"
+              />
+
+              <SellReservedTicket :id-projection="projection.id" />
+            </template>
 
             <RateProjection :id-projection="projection.id" />
 
@@ -82,6 +107,12 @@
 
             <v-list two-line subheader>
               <v-subheader class="text-h4">Comments</v-subheader>
+              <div
+                v-if="projection.displayDto.movie.comments.length === 0"
+                class="my-5 mx-11"
+              >
+                <p>No comments here...</p>
+              </div>
               <div
                 v-for="comment in projection.displayDto.movie.comments"
                 :key="`comment-${comment.id}`"
