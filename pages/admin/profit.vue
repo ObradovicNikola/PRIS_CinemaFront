@@ -130,12 +130,19 @@ const methods = {
 
     this.buttonLoading = false
 
-    this.clear()
+    // this.clear()
     this.frmMeta.status = 'submitted'
   },
   clear() {
     this.frm = frmDefaults()
     this.frmMeta = frmMetaDefaults()
+
+    this.dates = [
+      new Date('2022-05-23').toISOString().slice(0, 10),
+      new Date().toISOString().slice(0, 10),
+    ]
+
+    this.totalProfit = 0
 
     this.$refs.observer.reset()
   },
