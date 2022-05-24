@@ -12,7 +12,7 @@
           >New Projection</v-btn
         >
       </template>
-      <v-card style="width: 550px">
+      <v-card style="width: 550px" class="mx-auto">
         <v-card-title>
           <span class="text-h5">New Projection</span>
         </v-card-title>
@@ -218,7 +218,6 @@ const data = () => ({
 
 const computed = {
   dateDisplay() {
-    console.log(this.movies)
     return this.dateValue
   },
 }

@@ -12,7 +12,7 @@
           >New Movie</v-btn
         >
       </template>
-      <v-card style="width: 550px">
+      <v-card style="width: 550px" class="mx-auto">
         <v-card-title>
           <span class="text-h5">New Movie</span>
         </v-card-title>
