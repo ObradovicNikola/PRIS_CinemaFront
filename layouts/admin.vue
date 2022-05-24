@@ -159,9 +159,9 @@ const data = () => ({
       link: '/admin/halls',
     },
     {
-      title: 'Users',
-      icon: 'school',
-      link: '/admin/users',
+      title: 'Profit',
+      icon: 'cash-100',
+      link: '/admin/profit',
     },
   ],
 })
